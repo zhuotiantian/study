@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            //resolve：成功
+            //reject:失败
+            $.ajax({
+                url: "./1.txt",
+                dataType: "json",
+                success: (data) => {
+                    resolve(data)
+                },
+                error: (err) => {
+                    reject(err)
+                }
+            })
+        });
+
+        p.then((data) => {
+            // console.log(data);
+        }, (res) => {
+            // console.log(res);
+        });
+
+        async function show() {
+            let a = 1;
+            let b = 2;
+            try {
+                let data = await $.ajax({
+                    url: "./1.txt",
+                    dataType: "json"
+                });
+                let data2 = await $.ajax({
+                    url: "./2.txt",
+                    dataType: "json"
+                });
+
+                console.log(data.reduce((total, current) => {
+                    return total + current
+                }) + data2.reduce((total, current) => {
+                    return total + current
+                }));
+            } catch (err) {
+                console.log("出现异常");
+            }
+
+        };
+        show();
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
