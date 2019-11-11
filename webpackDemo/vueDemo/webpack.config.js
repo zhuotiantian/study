@@ -1,7 +1,8 @@
 const path = require('path');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-
-
+const {
+  STYLELINT
+} = require("./config/index");
 module.exports = function (env, argv) {
   env = env || {
     development: true
@@ -17,6 +18,7 @@ module.exports = function (env, argv) {
   return {
     entry: ['@babel/polyfill', './src/index'],
     ...conf,
+    //加载loader
     module: {
       rules: [
         //js
@@ -29,19 +31,19 @@ module.exports = function (env, argv) {
                 presets: ['@babel/preset-env'],
               },
             },
-            {
+            ...STYLELINT ? [{
               loader: 'eslint-loader',
               options: {
                 exclude: /node_modules|bower/,
               },
-            },
+            }] : [],
           ],
         },
         //css
         {
           test: /\.css$/i,
           use: [
-            'style-loader',
+            'vue-style-loader',
             'css-loader',
             {
               loader: 'postcss-loader',
@@ -78,7 +80,20 @@ module.exports = function (env, argv) {
             },
           },
         },
-      ],
+        //vue
+        {
+          test: /\.vue$/i,
+          use: 'vue-loader'
+        }
+      ]
     },
-  };
+    //别名
+    resolve: {
+      alias: {
+        "vue": "vue/dist/vue.esm",
+        "@": path.resolve(__dirname, './src/js/')
+      }
+    }
+  }
+
 };
