@@ -1,3 +1,4 @@
+//求三数之和等于零
 var threeSum = function (nums) {
   var sortNums = nums.sort((a, b) => {
       return a - b
@@ -30,7 +31,8 @@ var threeSum = function (nums) {
 };
 // threeSum([-1, 0, 1, 2, -1, -4]);
 
-
+//三数之和最接近target的和
+//解法：固定一个值，使用双指针
 var threeSumClosest = function (nums, target) {
   let sortNums = nums.sort((a, b) => {
       return a - b
@@ -68,4 +70,49 @@ var threeSumClosest = function (nums, target) {
   };
   return closestNum;
 };
-console.log(threeSumClosest([1, 1, -1, -1, 3], -1));
+// console.log(threeSumClosest([1, 1, -1, -1, 3], -1));
+
+
+//求解四数之和与target相等的集合
+//固定两个值，使用双指针
+var fourSum = function (nums, target) {
+  let result = [],
+    sortNums = nums.sort((a, b) => {
+      return a - b
+    }),
+    len = sortNums.length;
+  console.log(...sortNums);
+  if (len <= 3) return [];
+  if (len === 4) {
+    let sum = sortNums.reduce((total, next) => {
+      return total + next
+    });
+    if (sum === target) {
+      return [nums]
+    } else {
+      return []
+    }
+  };
+  for (var i = 0; i < len - 3;) {
+    let j = i + 1;
+    while (j < len - 2) {
+      let left = j + 1,
+        right = len - 1;
+      while (left < right) {
+        let sum = sortNums[i] + sortNums[j] + sortNums[left] + sortNums[right];
+        if (sum == target) {
+          result.push([sortNums[i], sortNums[j], sortNums[left], sortNums[right]]);
+        };
+        if (sum > target) {
+          while (left < right && sortNums[right] === sortNums[--right]) {}
+        } else {
+          while (left < right && sortNums[left] === sortNums[++left]) {}
+        };
+      }
+      while (sortNums[j] === sortNums[++j]) {}
+    };
+    while (sortNums[i] === sortNums[++i]) {}
+  };
+  return result
+};
+console.log(fourSum([0, 4, -5, 2, -2, 4, 2, -1, 4], 12));
