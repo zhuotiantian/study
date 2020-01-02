@@ -68,3 +68,63 @@ let values = 123;
 const sumFunc = (x: number, y?: number): number => {
   return x + (y || 0);
 };
+
+// 联合类型的类型保护
+const getLengthFunction = (value: string | null): number => {
+  // if (value === null) {
+  //   return 0;
+  // } else {
+  //   return value.length;
+  // }
+  return (value || "").length;
+};
+// 联合类型的类型断言
+// 使用！定义某个变量不为null
+function getSplicedStr(num: number | null): string {
+  function getRes(prefix: string) {
+    return prefix + num!.toFixed().toString();
+  }
+  num = num || 0.1;
+  return getRes("lison-");
+}
+// 类型别名
+type TypeString = string;
+let str1: TypeString;
+
+// 可辨识联合
+// 1.具有普通的单例类型属性
+// 2.一个类型别名包含了哪些类型的联合
+interface Square {
+  kind: "square";
+  size: number;
+}
+
+interface Rectangle {
+  kind: "rectangle";
+  height: number;
+  width: number;
+}
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+type Shape = Square | Rectangle | Circle;
+function assertNever(value: never): never {
+  throw new Error("Unexpect object:" + value);
+}
+function getArea(s: Shape): number {
+  switch (s.kind) {
+    case "square":
+      return s.size * s.size;
+      break;
+    case "rectangle":
+      return s.height * s.width;
+      break;
+    case "circle":
+      return Math.PI * s.radius ** 2;
+      break;
+    default:
+      return assertNever(s);
+  }
+}
+// console.log(getArea());
