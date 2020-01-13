@@ -8,7 +8,9 @@
     "object-literal-sort-keys": false,
     "max-classes-per-file": false,
     "no-empty": false,
-    "variable-name": false
+    "variable-name": false,
+    "no-namespace": false,
+    "no-reference": false
   },
   "rulesDirectory": []
 }
