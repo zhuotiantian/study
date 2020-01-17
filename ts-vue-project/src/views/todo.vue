@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import TodoItem from '@/components/todo-item';
-import {State,Mutation} from "vuex-class"
+import { State, Mutation } from 'vuex-class';
 @Component({
   name: 'TodoPage',
   components: {
@@ -21,8 +21,7 @@ export default class TodoPage extends Vue {
   public editting = -1;
   @Mutation('updateList') public updateList;
   public handleSave({ index, content }) {
-    // this.list[index].text = content;
-    this.updateList({index,content});
+    this.updateList({ index, content });
     this.handleCancel();
   }
   public handleEdit(index) {
@@ -31,10 +30,8 @@ export default class TodoPage extends Vue {
   public handleCancel() {
     this.editting = -1;
   }
-  public complete(index){
+  public complete(index) {
     this.list[index].complete = true;
   }
-
-
 }
 </script>
