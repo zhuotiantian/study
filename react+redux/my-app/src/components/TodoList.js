@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import Todo from "./Todo";
 class App extends Component {
   render() {
-    const { todos } = this.props;
+    const { todos, toggleTodo } = this.props;
     return (
       <ul>
         {todos.map(todo => {
-          return <Todo key={todo.id} {...todo} />;
+          return <Todo key={todo.id} {...todo} toggleTodo={toggleTodo} />;
         })}
       </ul>
     );
