@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 class App extends Component {
   handleClick = e => {
-    this.props.setVisibilityFilter(e);
+    this.props.setFilter(e);
   };
   render() {
     const { filter } = this.props;
